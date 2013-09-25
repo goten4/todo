@@ -13,6 +13,13 @@
 		<generate-classmap dir="library" />
 	</target>
 
+	<target name="initdb" description="Initialise la base sqlite">
+		<exec dir="./application/data" executable="sqlite3" failonerror="true" input="./application/data/schema.sql">
+			<arg value="todos.db" />
+		</exec>
+		<chmod file="./application/data/todos.db" perm="ugo+w"/>
+	</target>
+
 	<macrodef name="generate-classmap">
 		<attribute name="dir" default="." />
 		<sequential>
