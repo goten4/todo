@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="todo" default="help">
+	<description>Todo</description>
+
+	<target name="help" description="Affiche cette aide">
+		<java classname="org.apache.tools.ant.Main">
+			<arg value="-projecthelp" />
+		</java>
+	</target>
+
+	<target name="classmap" description="Génère les fichiers autoload_classmap.php">
+		<generate-classmap dir="application" />
+		<generate-classmap dir="library" />
+	</target>
+
+	<macrodef name="generate-classmap">
+		<attribute name="dir" default="." />
+		<sequential>
+			<exec dir="@{dir}" executable="php" failonerror="true">
+				<arg value="../../vendor/zendframework/zendframework/bin/classmap_generator.php" />
+			</exec>
+		</sequential>
+	</macrodef>
+</project>
