@@ -1,0 +1,99 @@
+diff --git a/application/views/layouts/scripts/layout.phtml b/application/views/layouts/scripts/layout.phtml
+index f444156..eb05b83 100644
+--- a/application/views/layouts/scripts/layout.phtml
++++ b/application/views/layouts/scripts/layout.phtml
+@@ -3,19 +3,34 @@
+ <head>
+ 	<?php echo $this->headTitle(); ?>
+ 
++	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 	<meta charset="utf-8" />
+ 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ 	<?php echo $this->headLink(); ?>
+-	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+ 	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+ 	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
++	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
++	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
++	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
++	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css">
++	<style type="text/css">
++        body {
++            padding-top: 50px;
++        }
++    </style>
+ </head>
+ <body>
+-	<header>
+-		<div id="logo">TODO</div>
+-	</header>
+-	<div id="content">
++	<div class="navbar navbar-inverse navbar-fixed-top">
++		<div class="container">
++			<div class="navbar-header">
++				<a class="navbar-brand" href="/">TODO List</a>
++			</div>
++		</div>
++	</div>
++	<div class="container">
++		<div class="starter-template">
+ <?php echo $this->layout()->content?>
++		</div>
+ 	</div>
+ </body>
+ </html>
+diff --git a/application/views/scripts/todos/edit.phtml b/application/views/scripts/todos/edit.phtml
+index 14470c5..ad2283b 100644
+--- a/application/views/scripts/todos/edit.phtml
++++ b/application/views/scripts/todos/edit.phtml
+@@ -1,8 +1,9 @@
+-<form action="/todos/update" method="POST">
+-    <input type="hidden" name="id" value="<?php echo $this->todo->getId(); ?>" />
+-    <label for="description">Chose à faire : </label><input type="text" name="description" value="<?php echo $this->escape($this->todo->getDescription()); ?>" />
+-    <button>Valider</button>
++<h1>Modifier une chose à faire</h1>
++<form action="/todos/update" method="POST" role="form">
++    <div class="form-group">
++        <input type="hidden" name="id" value="<?php echo $this->todo->getId(); ?>" />
++        <label for="description">Chose à faire : </label>
++        <input type="text" id="description" name="description" class="form-control" placeholder="Saisissez une chose à faire" value="<?php echo $this->escape($this->todo->getDescription()); ?>" />
++    </div>
++    <a href="/" class="btn btn-danger">Annuler</a> <button class="btn btn-primary">Valider</button>
+ </form>
+-<p>
+-    <a href="/">Retour</a>
+-</p>
+\ No newline at end of file
+diff --git a/application/views/scripts/todos/index.phtml b/application/views/scripts/todos/index.phtml
+index d09e08f..1f94c39 100644
+--- a/application/views/scripts/todos/index.phtml
++++ b/application/views/scripts/todos/index.phtml
+@@ -2,7 +2,7 @@
+ <p>
+     <a href="/todos/new">Nouvelle chose à faire</a>
+ </p>
+-<table>
++<table class="table">
+     <thead>
+         <tr>
+             <th>Chose à faire</th>
+diff --git a/application/views/scripts/todos/new.phtml b/application/views/scripts/todos/new.phtml
+index c993f96..b99b3d5 100644
+--- a/application/views/scripts/todos/new.phtml
++++ b/application/views/scripts/todos/new.phtml
+@@ -1,7 +1,8 @@
+-<form action="/todos/create" method="POST">
+-    <label for="description">Chose à faire : </label><input type="text" name="description" />
+-    <button>Valider</button>
++<h1>Nouvelle chose à faire</h1>
++<form action="/todos/create" method="POST" role="form">
++    <div class="form-group">
++        <label for="description">Chose à faire</label>
++        <input id="description" type="text" class="form-control" name="description" placeholder="Saisissez une chose à faire" />
++    </div>
++    <a href="/" class="btn btn-danger">Annuler</a> <button class="btn btn-primary">Valider</button>
+ </form>
+-<p>
+-    <a href="/">Retour</a>
+-</p>
+\ No newline at end of file

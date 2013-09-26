@@ -1,0 +1,41 @@
+diff --git a/application/controllers/TodosController.php b/application/controllers/TodosController.php
+index f1ea703..688d5e8 100644
+--- a/application/controllers/TodosController.php
++++ b/application/controllers/TodosController.php
+@@ -23,4 +23,16 @@ class TodosController extends BaseController
+         }
+         $this->redirect('/todos');
+     }
++    
++    public function deleteAction()
++    {
++        if ($this->hasParam('id')) {
++            $todo = Repositories::todos()->getById($this->getParam('id'));
++            if ($todo === null) {
++                return $this->notFound();
++            }
++            Repositories::todos()->remove($todo);
++        }
++        $this->redirect('/todos');
++    }
+ }
+diff --git a/application/views/scripts/todos/index.phtml b/application/views/scripts/todos/index.phtml
+index 37119ae..36e0405 100644
+--- a/application/views/scripts/todos/index.phtml
++++ b/application/views/scripts/todos/index.phtml
+@@ -7,6 +7,7 @@
+         <tr>
+             <th>Chose à faire</th>
+             <th>Date de création</th>
++            <th>Actions</th>
+         </tr>
+     </thead>
+     <tbody>
+@@ -14,6 +15,7 @@
+         <tr>
+             <td><?php echo $this->escape($todo->getDescription()); ?></td>
+             <td><?php echo $this->dateFormat($todo->getCreatedAt()); ?></td>
++            <td><a href="/todos/delete?id=<?php echo $todo->getId(); ?>">supprimer</a></td>
+         </tr>
+ <?php endforeach; ?>
+     </tbody>

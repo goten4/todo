@@ -1,0 +1,114 @@
+diff --git a/application/controllers/TodosController.php b/application/controllers/TodosController.php
+index f1ea703..bd8dcef 100644
+--- a/application/controllers/TodosController.php
++++ b/application/controllers/TodosController.php
+@@ -23,4 +23,31 @@ class TodosController extends BaseController
+         }
+         $this->redirect('/todos');
+     }
++
++    public function editAction()
++    {
++        if (!$this->hasParam('id')) {
++            return $this->notFound();
++        }
++        $this->view->todo = Repositories::todos()->getById($this->getParam('id'));
++        if ($this->view->todo === null) {
++            return $this->notFound();
++        }
++    }
++
++    public function updateAction()
++    {
++        if (!$this->hasParam('id')) {
++            return $this->notFound();
++        }
++        $todo = Repositories::todos()->getById($this->getParam('id'));
++        if ($todo === null) {
++            return $this->notFound();
++        }
++        
++        if ($this->hasParam('description')) {
++            Repositories::todos()->update($todo->setDescription($this->getParam('description')));
++        }
++        $this->redirect('/todos');
++    }
+ }
+diff --git a/application/views/scripts/todos/edit.phtml b/application/views/scripts/todos/edit.phtml
+new file mode 100644
+index 0000000..14470c5
+--- /dev/null
++++ b/application/views/scripts/todos/edit.phtml
+@@ -0,0 +1,8 @@
++<form action="/todos/update" method="POST">
++    <input type="hidden" name="id" value="<?php echo $this->todo->getId(); ?>" />
++    <label for="description">Chose à faire : </label><input type="text" name="description" value="<?php echo $this->escape($this->todo->getDescription()); ?>" />
++    <button>Valider</button>
++</form>
++<p>
++    <a href="/">Retour</a>
++</p>
+\ No newline at end of file
+diff --git a/application/views/scripts/todos/index.phtml b/application/views/scripts/todos/index.phtml
+index 37119ae..d107f76 100644
+--- a/application/views/scripts/todos/index.phtml
++++ b/application/views/scripts/todos/index.phtml
+@@ -7,6 +7,7 @@
+         <tr>
+             <th>Chose à faire</th>
+             <th>Date de création</th>
++            <th>Actions</th>
+         </tr>
+     </thead>
+     <tbody>
+@@ -14,6 +15,7 @@
+         <tr>
+             <td><?php echo $this->escape($todo->getDescription()); ?></td>
+             <td><?php echo $this->dateFormat($todo->getCreatedAt()); ?></td>
++            <td><a href="/todos/edit?id=<?php echo $todo->getId(); ?>">modifier</a></td>
+         </tr>
+ <?php endforeach; ?>
+     </tbody>
+diff --git a/application/views/scripts/todos/new.phtml b/application/views/scripts/todos/new.phtml
+index 4896a5f..c993f96 100644
+--- a/application/views/scripts/todos/new.phtml
++++ b/application/views/scripts/todos/new.phtml
+@@ -1,4 +1,7 @@
+ <form action="/todos/create" method="POST">
+     <label for="description">Chose à faire : </label><input type="text" name="description" />
+     <button>Valider</button>
+-</form>
+\ No newline at end of file
++</form>
++<p>
++    <a href="/">Retour</a>
++</p>
+\ No newline at end of file
+diff --git a/library/Todo/Model/Todo.php b/library/Todo/Model/Todo.php
+index 77b82a9..577a808 100644
+--- a/library/Todo/Model/Todo.php
++++ b/library/Todo/Model/Todo.php
+@@ -21,6 +21,7 @@ class Todo
+     public function setId($id)
+     {
+         $this->id = $id;
++        return $this;
+     }
+ 
+     public function getDescription()
+@@ -31,6 +32,7 @@ class Todo
+     public function setDescription($description)
+     {
+         $this->description = $description;
++        return $this;
+     }
+ 
+     public function getCreatedAt()
+@@ -41,5 +43,6 @@ class Todo
+     public function setCreatedAt($createdAt)
+     {
+         $this->createdAt = $createdAt;
++        return $this;
+     }
+ }
+\ No newline at end of file
