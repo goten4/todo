@@ -95,3 +95,53 @@ http://nvie.com/posts/a-successful-git-branching-model/
 * Commiter
 * Faire un rebase sur `develop`
 * Pousser le commit sur `origin/develop`
+
+## Aliases utiles
+```
+[alias]
+        st = status
+        co = checkout
+        lola = log --graph --decorate --pretty=format:'%C(blue)[%ad %an] %C(yellow)%h%d%Creset %s' --date=short --all
+```
+
+## Commandes utiles
+* Créer une branche locale et se positionner dessus
+```bash
+ $ git checkout -b delete
+```
+* Faire un rebase depuis `develop` vers `delete`
+```bash
+ $ git rebase develop delete
+```
+* Résoudre les conflits d'un rebase
+```bash
+ $ git mergetool -t meld
+```
+* Terminer un rebase après avoir résolu des conflits
+```bash
+ $ git rebase --continue
+```
+* Annuler un rebase qui engendre des conflits
+```bash
+ $ git rebase --abort
+```
+* Supprimer du répertoire de travail les fichiers et répertoires marqués `untracked`
+```bash
+ $ git clean -df
+```
+* Annuler les changements marqués `not staged`
+```bash
+ $ git checkout -- .
+```
+* Annuler les changements marqués `to be committed`
+```bash
+ $ git reset HEAD
+```
+* Annuler le dernier commit (en conservant les changements associés dans le répertoire de travail)
+```bash
+ $ git reset HEAD~1
+```
+* Annuler le dernier commit (en perdant les changements associés)
+```bash
+ $ git reset --hard HEAD~1
+```
