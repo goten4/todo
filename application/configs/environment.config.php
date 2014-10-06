@@ -19,8 +19,7 @@ return array(
             'syslog' => array(
                 'writerName' => 'Syslog', 
                 'writerParams' => array(
-                    'application' => 'storm', 
-                    'facility' => LOG_LOCAL7
+                    'application' => 'todo'
                 ), 
                 'formatterName' => 'Simple', 
                 'formatterParams' => array(
