@@ -23,4 +23,31 @@ class TodosController extends BaseController
         }
         $this->redirect('/todos');
     }
+
+    public function editAction()
+    {
+        if (!$this->hasParam('id')) {
+            return $this->notFound();
+        }
+        $this->view->todo = Repositories::todos()->getById($this->getParam('id'));
+        if ($this->view->todo === null) {
+            return $this->notFound();
+        }
+    }
+
+    public function updateAction()
+    {
+        if (!$this->hasParam('id')) {
+            return $this->notFound();
+        }
+        $todo = Repositories::todos()->getById($this->getParam('id'));
+        if ($todo === null) {
+            return $this->notFound();
+        }
+        
+        if ($this->hasParam('description')) {
+            Repositories::todos()->update($todo->setDescription($this->getParam('description')));
+        }
+        $this->redirect('/todos');
+    }
 }

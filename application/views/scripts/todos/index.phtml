@@ -7,6 +7,7 @@
         <tr>
             <th>Chose à faire</th>
             <th>Date de création</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -14,6 +15,7 @@
         <tr>
             <td><?php echo $this->escape($todo->getDescription()); ?></td>
             <td><?php echo $this->dateFormat($todo->getCreatedAt()); ?></td>
+            <td><a href="/todos/edit?id=<?php echo $todo->getId(); ?>">modifier</a></td>
         </tr>
 <?php endforeach; ?>
     </tbody>

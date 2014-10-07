@@ -21,6 +21,7 @@ class Todo
     public function setId($id)
     {
         $this->id = $id;
+        return $this;
     }
 
     public function getDescription()
@@ -31,6 +32,7 @@ class Todo
     public function setDescription($description)
     {
         $this->description = $description;
+        return $this;
     }
 
     public function getCreatedAt()
@@ -41,5 +43,6 @@ class Todo
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
+        return $this;
     }
 }

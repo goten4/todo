@@ -1,0 +1,8 @@
+<form action="/todos/update" method="POST">
+    <input type="hidden" name="id" value="<?php echo $this->todo->getId(); ?>" />
+    <label for="description">Chose à faire : </label><input type="text" name="description" value="<?php echo $this->escape($this->todo->getDescription()); ?>" />
+    <button>Valider</button>
+</form>
+<p>
+    <a href="/">Retour</a>
+</p>
