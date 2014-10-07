@@ -15,6 +15,18 @@ class TodosController extends BaseController
     public function newAction()
     {
     }
+    
+    public function deleteAction()
+    {
+        if ($this->hasParam('id')) {
+            $todo = Repositories::todos()->getById($this->getParam('id'));
+            if ($todo === null) {
+                return $this->notFound();
+            }
+            Repositories::todos()->remove($todo);
+        }
+        $this->redirect('/todos');
+    }
 
     public function createAction()
     {
